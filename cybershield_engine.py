@@ -23,7 +23,7 @@ df_raw = kagglehub.dataset_load(
     file_path
 )
 
-print("✅ Data successfully pulled from CERT Kaggle source!")
+print("Data successfully pulled from CERT Kaggle source!")
 print(f"Total raw log events loaded: {len(df_raw)}")
 print(df_raw.head())
 
@@ -50,7 +50,7 @@ daily_profiles = df_raw.groupby(['user', 'day_string']).agg(
     unique_pcs=('pc', 'nunique')
 ).reset_index()
 
-print("🎯 Aggregation complete! Behavioral Profiles generated:")
+print("Aggregation complete! Behavioral Profiles generated:")
 print(daily_profiles.head())
 
 from sklearn.ensemble import IsolationForest
@@ -72,7 +72,7 @@ daily_profiles['is_threat'] = model.predict(X_scaled)
 # Normalize labels: 1 = Threat Flag, 0 = Normal Baseline
 daily_profiles['is_threat'] = daily_profiles['is_threat'].apply(lambda x: 1 if x == -1 else 0)
 
-print(f"🛡️ CyberShield analysis complete. Flagged {daily_profiles['is_threat'].sum()} critical threats.")
+print(f"CyberShield analysis complete. Flagged {daily_profiles['is_threat'].sum()} critical threats.")
 
 threat_alerts = daily_profiles[daily_profiles['is_threat'] == 1].sort_values(by='anomaly_score')
 print("CYBERSHIELD AI PLATFORM: INCIDENT RESPONSE AUDIT REPORT")
@@ -110,7 +110,7 @@ sns.scatterplot(
     color='crimson', s=130, marker='X', label='CyberShield Threat Flag'
 )
 
-plt.title('🛡️ CyberShield AI: Behavior Anomaly Distribution (CERT Logs)', fontsize=14, fontweight='bold')
+plt.title('CyberShield AI: Behavior Anomaly Distribution (CERT Logs)', fontsize=14, fontweight='bold')
 plt.xlabel('Total Interaction Events (Logon/Logoff Volume)', fontsize=11)
 plt.ylabel('Off-Hours Incidents (Outside 6 AM - 6 PM)', fontsize=11)
 plt.legend(frameon=True, shadow=True, facecolor='white')
